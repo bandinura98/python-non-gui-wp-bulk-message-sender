@@ -31,4 +31,4 @@ python wpsender.py [OPTION]
 
 
 it is a tool that sends the wp messages as bulk or single withouth gui
-its under development for now send bulk message doesn't work
+its under development for now addphone doesn't work
