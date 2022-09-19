@@ -97,16 +97,16 @@ def send_bulk_msg(text):
         sendmsg(''.join(num),text)
         print(''.join(num),text)
 
-def send_potho():
+def send_potho(number,message,url):
     url = "http://127.0.0.1:8000/chats/send?id=john"
     
     myobj = {
-        "receiver": "905422607701",
+        "receiver": number,
         "message": {
             "image": {
-                "url": 'https://w7.pngwing.com/pngs/110/230/png-transparent-whatsapp-application-software-message-icon-whatsapp-logo-whats-app-logo-logo-grass-mobile-phones-thumbnail.png'
+                "url": url
             },
-        "caption": 'My logo'
+        "caption": message
         }
     }
     
@@ -145,15 +145,17 @@ def main():
         send_bulk_msg(text)
         
     if str(sys.argv[1])=="addnum":
-        print("4")
-        
-    if str(sys.argv[1])=="sendpotho":
-        print("5")
-    
-    if str(sys.argv[1])=="addnum":
-    
         number = input('Enter number:')
         addnum(number)
+    
+    if str(sys.argv[1])=="sendpotho":
+        number = input('Enter number:')
+        
+        text = input('Enter text:')
+        
+        url = input('Enter url:')
+        
+        send_potho(number,text,url)
     
     if str(sys.argv[1])=="help":
         print("sendmsg: sends single message to the number")
