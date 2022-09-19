@@ -19,10 +19,13 @@ pip install requests
 
 
 to start the api
+edit the db.ini file than
 enter the baileys api directory and type 
 npm run start
 
 on another terminal open the python's directory and start using like
+
+python initializor.py
 python wpsender.py [OPTION]
 
 
