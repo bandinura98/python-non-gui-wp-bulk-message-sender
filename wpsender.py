@@ -2,6 +2,7 @@ import requests
 import json
 import mysql.connector
 import sys
+import sqlite3
 
 '''
 print("////////////////////////////////////////////////////////////////////")
@@ -39,19 +40,17 @@ print("                                                 ||----w |")
 print("                                                 ||     ||")
 
 
-print("This is the name of the program:", sys.argv[1])
+print("")
 
-def db_connection():
-
-    try:
-        mydb = mysql.connector.connect(
-          host="localhost",
-          user="root",
-          password="baba1111"
-        )
-        print(mydb)
-    except:
-        print("sql error")
+try:
+    mydb = mysql.connector.connect(
+      host="localhost",
+      user="root",
+      password="baba1111"
+    )
+    #print(mydb)
+except:
+    print("sql error you need to run initializor.py")
 
 
 def add_sessions():
@@ -96,6 +95,7 @@ def send_bulk_msg(text):
     nums = getnums()
     for num in nums:
         sendmsg(''.join(num),text)
+        print(''.join(num),text)
 
 def send_potho():
     url = "http://127.0.0.1:8000/chats/send?id=john"
@@ -110,16 +110,23 @@ def send_potho():
         }
     }
     
-    
-    
-
-    
     print(myobj)
     #https://w7.pngwing.com/pngs/110/230/png-transparent-whatsapp-application-software-message-icon-whatsapp-logo-whats-app-logo-logo-grass-mobile-phones-thumbnail.png
     
     x = requests.post(url,json=myobj)
     
     print(x.text)
+def addnum(text):
+    mycursor = mydb.cursor()
+
+    sql = "INSERT INTO customers (num) VALUES (%s)"
+    val = (str(text))
+    mycursor.execute(sql, val)
+
+    mydb.commit()
+
+    print(mycursor.rowcount, "record inserted.")
+
 
 def main():
     if str(sys.argv[1])=="sendmsg":
@@ -134,13 +141,19 @@ def main():
         add_sessions()
         
     if str(sys.argv[1])=="sendbulk":
-        print("3")
+        text = input('Enter Message:')
+        send_bulk_msg(text)
         
-    if str(sys.argv[1])=="getnum":
+    if str(sys.argv[1])=="addnum":
         print("4")
         
     if str(sys.argv[1])=="sendpotho":
         print("5")
+    
+    if str(sys.argv[1])=="addnum":
+    
+        number = input('Enter number:')
+        addnum(number)
     
     if str(sys.argv[1])=="help":
         print("sendmsg: sends single message to the number")
@@ -150,7 +163,7 @@ def main():
         print("sendpotho: send message with image")
         print("help: shows this message")
         
-    if str(sys.argv[1])!="sendmsg" and str(sys.argv[1])!="addses" and str(sys.argv[1])!="sendbulk" and str(sys.argv[1])!="getnum" and str(sys.argv[1])!="sendpotho" and str(sys.argv[1])!="help":
+    if str(sys.argv[1])!="sendmsg" and str(sys.argv[1])!="addses" and str(sys.argv[1])!="sendbulk" and str(sys.argv[1])!="getnum" and str(sys.argv[1])!="sendpotho" and str(sys.argv[1])!="help" and str(sys.argv[1])=="addnum":
         print("the usage is wrong type")
         print("python wpsender.py help")
         print("for see the required usage")
