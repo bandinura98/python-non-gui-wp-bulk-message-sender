@@ -1,4 +1,4 @@
-# python-non-gui-wp-bulk-message-sender
+# python-non-gui-wp-bulk-message-sender V1.0.2
 
 Requirements:
 ookamiiixd's baileys-api
